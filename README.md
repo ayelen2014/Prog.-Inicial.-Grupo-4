@@ -6,5 +6,4 @@ Emiliano Arce
 Valentina Yáñez
 Fernando Fonseca
 Arroyo Ayelén
-Analia Pedrozo
-Sugey Romero
+Sugey Romero                
