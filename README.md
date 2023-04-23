@@ -2,7 +2,7 @@
 Proyecto Integrador. Grupo 4. TSIT4.0 
 Integrantes del Grupo:
 
-Emiliano Arce
+José Emiliano Arce 35579867
 Valentina Yáñez
 Fernando Fonseca
 Arroyo Ayelén
