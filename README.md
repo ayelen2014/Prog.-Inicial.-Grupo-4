@@ -6,4 +6,4 @@ José Emiliano Arce 35579867
 Valentina Yáñez
 Fernando Fonseca
 Arroyo Ayelén
-Sugey Romero                
+                
