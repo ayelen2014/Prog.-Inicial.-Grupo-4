@@ -5,7 +5,7 @@ class Conectar:
     def __init__(self, host, user, password, database, port):
         self.host = 'localhost'
         self.user = 'root'
-        self.password = 'wondershared98'
+        self.password = 'password'
         self.database = 'bd_grupo4'
         self.connection = None
         self.port = 3306
@@ -43,7 +43,7 @@ class Conectar:
         return result
 
 
-db = Conectar('localhost', 'root', 'wondershared98', 'bd_grupo4', 'port')
+db = Conectar('localhost', 'root', 'password', 'bd_grupo4', 'port')
 
 while True:
     print("Seleccione una opción:")
