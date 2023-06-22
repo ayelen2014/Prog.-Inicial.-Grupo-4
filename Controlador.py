@@ -18,9 +18,6 @@ class Modelo:
         precio = int(input("\nIngrese el precio del Producto: "))
         unidad_de_medida= input("\nIngrese la unidad de medida del Producto: ")
 
-        #Aquí deberían brindarle la posibilidad al usuario de elegir una receta existente 
-        # en la BD o que cree una receta nueva.
-
         nuevoProducto= Modelo.Producto(0,nombre_producto,stock,precio,unidad_de_medida,0)
 
         con.InsertarProducto(nuevoProducto)
