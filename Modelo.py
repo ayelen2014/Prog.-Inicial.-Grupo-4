@@ -41,7 +41,20 @@ class Conectar:
         cursor.execute(query)
         result = cursor.fetchall()
         return result
-
+    
+    def delete_data(self, table):
+        query = "DELETE * FROM {}".format(table)
+        cursor = self.connection.cursor()
+        cursor.execute(query)
+        result = cursor.fetchall()
+        return result
+    
+    def update_data(self, table):
+        query = "UPDATE * FROM {}".format(table)
+        cursor = self.connection.cursor()
+        cursor.execute(query)
+        result = cursor.fetchall()
+        return result
 
 db = Conectar('localhost', 'root', 'wondershared98', 'bd_grupo4', 'port')
 
