@@ -1,5 +1,5 @@
-CREATE DATABASE if not exists  NOVO_MUNDO;
-USE bd_NOVO_MUNDO;
+CREATE DATABASE if not exists  bd_grupo4;
+USE bd_grupo4;
 -- Tabla "Productos"
 
 CREATE TABLE Productos (
