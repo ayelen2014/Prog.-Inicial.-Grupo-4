@@ -5,9 +5,9 @@ from datetime import datetime
 bd= panaderia()
 
 def mostrarMenuPrincipal():
-    print("\n+-------------------------------------------+")
-    print("|                  PANADERIA                 |")
-    print("+-------------------------------------------+\n")
+    print("\n+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+")
+    print("{                  PANADERIA                 }")
+    print("+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+\n")
     print("")
     print("MENÚ PRINCIPAL\n")
     print("[1] - INSERTAR UN PRODUCTO")
