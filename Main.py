@@ -1,38 +1,70 @@
-import Controlador
-from Producto import Producto
+from Modelo import *
+from datetime import datetime
 
-while True:
+
+bd= panaderia()
+
+def mostrarMenuPrincipal():
     print("\n+-------------------------------------------+")
-    print("|                  PANADERIA                |")
-    print("|                Big Bread SA               |")
+    print("|                  PANADERIA                 |")
     print("+-------------------------------------------+\n")
     print("")
     print("MENÚ PRINCIPAL\n")
-    print("1 - INGRESAR / ELIMINAR / MODIFICACION DE PRODUCTO")
-    print("2 - ALTA / BAJA / MODIFICAR INSUMOS")
-    print("3 - ALTA / BAJA / MODIFICAR PRODUCCIÓN DIARIA")
-    print("4 - ALTA / BAJA / MODIFICAR RECETAS")
-    print("5 - LISTA DE PRODUCTOS")
-    print("6 - LISTA DE PRODUCCIÓN EN UN INTERVALO")
-    print("7 - LISTA DE INSUMOS DIARIO")
-    print("8 - SALIR")
+    print("[1] - INSERTAR UN PRODUCTO")
+    print("[2] - ELIMINAR UN PRODUCTO")
+    print("[3] - ACTUALIZAR UN PRODUCTO")
+    print("[4] - SALIR")
     print("\n")
-    opcion = int(input("Ingrese su opción: "))
-    if opcion == 1:
-        Controlador.InsertarProducto()
-    elif opcion == 2:
-        None
-    elif opcion == 3:
-        None
-    elif opcion == 4:
-        None
-    elif opcion == 5:
-        Controlador.ListarProducto()
-    elif opcion == 6:
-        None
-    elif opcion == 7:
-        None
-    elif opcion == 8:
-        break
-    else:
-        print("¡Opción incorrecta!")
+
+def insertarProducto():
+    print("--------Insertar nuevo Producto--------")
+    bd.ListarProducto()
+    ID_Producto = int(input(f"Ingrese el tipo de Producto: "))
+    Nombre = int(input("Ingrese el nombre del Producto: "))
+    descripcion =  datetime.strptime(input("Ingrese una descripcion o fecha: DD/MM/AAAA : "), '%d/%m/%Y').date()
+    precio = input("Ingrese nuevo precio : ")
+    bd.ListarProducto()
+    bd.insertarProducto(ID_Producto, Nombre, descripcion, precio)
+
+
+def eliminarProducto():
+    print("--------Eliminar--------")
+    bd.consultarProducto()
+    ID_Producto = int(input("Ingrese el producto a eliminar: "))
+    bd.eliminarProducto(ID_Producto)
+
+def actualizar():
+    print("\n--------Actualizar Categoría--------\n")
+    ID_Producto = int(input("Actualice nuevo Producto: "))
+    Nombre = 'nombre del producto'
+    Descripcion = input("Ingrese nueva descripcion: ")
+    Precio = input ("Ingrese el nuevo precio: ")
+    bd.actualizar_Producto(ID_Producto, Nombre, Descripcion, Precio)
+    
+
+
+def crearMenuPrincipal():
+    opcion = " "
+    while (opcion != 7):
+        mostrarMenuPrincipal()
+        opcion = int(input("Ingrese su opción: "))
+        
+        if opcion == 1:
+            insertarProducto()
+        elif opcion == 2:
+           eliminarProducto()
+        elif opcion == 3:
+            actualizar()
+        elif opcion == 4:
+            print("Salir del menu")
+            break
+        else:
+            print("Opción incorrecta")
+      
+
+def inicializar():
+    crearMenuPrincipal()
+
+
+
+inicializar()

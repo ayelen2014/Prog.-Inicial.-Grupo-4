@@ -1,89 +1,285 @@
 import mysql.connector
-from Producto import Producto
+from Conexion import *
 
-class Conectar:
-    def __init__(self, host, user, password, database, port):
-        self.host = 'localhost'
-        self.user = 'root'
-        self.password = 'wondershared98'
-        self.database = 'bd_grupo4'
-        self.connection = None
-        self.port = 3306
+class panaderia():
+    def __init__(self):
+        
+        self.conexion = MySQLConnection("localhost","root","Wondershared98", "bd_grupo4", "3306")
 
-    def connect(self):
-        self.connection = mysql.connector.connect(
-            host=self.host,
-            user=self.user,
-            password=self.password,
-            database=self.database,
-            port=self.port
-        )
-        if self.connection.is_connected():
-            print("Conexión exitosa a la base de datos.")
+    def ListarProducto(self):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        cursor.execute("SELECT * FROM Productos")
+        tipoProducto = cursor.fetchall()
+        y=0
+        x=0
+        for i in tipoProducto:
+            print(tipoProducto[y][0], tipoProducto[y][1])
+            y+=1
+        self.conexion.close()
+
+    def insertarProducto(self, ID_Producto, Nombre, descripcion, precio):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        sql = "INSERT INTO producto(ID_Producto, Nombre, descripcion, precio) VALUES (%s,%s,%s,%s)"
+        cursor.execute(sql,(ID_Producto, Nombre, descripcion, precio))
+        self.conexion.commit()
+        cursor.close()
+        self.conexion.close()
+
+    def consultarProducto(self):
+        self.conexion.connect()
+        cursor=self.conexion.cursor()
+        cursor.execute("SELECT * FROM producto")
+        producto = cursor.fetchall()
+        y=0
+        x=0
+        for i in producto:
+            linea= ""
+            for x in range (8):
+                linea += str(producto[y][x]) + "  |  "
+            y+=1
+            print(linea)
+        return
+    
+    def eliminarProducto(self):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        cursor.execute("DELETE FROM producto ")
+        self.conexion.commit()
+        print("Fue eliminado exitosamente")
+        
+    def actualizar_Producto(self, ID_Producto, Nombre, Descripcion, Precio):
+        self.conexion.connect()
+        query = "UPDATE categoria SET {} = %s WHERE ID_Producto = %s".format(ID_Producto)
+        valores = (ID_Producto, Nombre, Descripcion, Precio)
+        cursor = self.conexion.cursor()
+        cursor.execute(query, valores)
+        self.conexion.commit()
+        if cursor.rowcount > 0:
+            print("Campo actualizado exitosamente.")
         else:
-            print("Error al conectar a la base de datos.")
+            print("No se encontró el registro o no se realizaron cambios.")
+            
+    def Insumos(self):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        cursor.execute("SELECT * FROM Insumos")
+        Insumos = cursor.fetchall()
+        y=0
+        x=0
+        for i in Insumos:
+            print(Insumos[y][0], Insumos[y][1])
+            y+=1
+        self.conexion.close()
 
-    def disconnect(self):
-        if self.connection.is_connected():
-            self.connection.close()
-            print("Desconexión exitosa de la base de datos.")
+    def insertarInsumos(self, ID_Insumos, Nombre, Cantidad):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        sql = "INSERT INTO Insumos(ID_Insumos, Nombre, Cantidad) VALUES (%s,%s,%s)"
+        cursor.execute(sql,(ID_Insumos, Nombre, Cantidad))
+        self.conexion.commit()
+        cursor.close()
+        self.conexion.close()
 
-    def insert_data(self, table, data):
-        query = "INSERT INTO {} VALUES {}".format(table, data)
-        cursor = self.connection.cursor()
-        cursor.execute(query)
-        self.connection.commit()
-        print("Datos insertados correctamente.")
-
-    def select_data(self, table):
-        query = "SELECT * FROM {}".format(table)
-        cursor = self.connection.cursor()
-        cursor.execute(query)
-        result = cursor.fetchall()
-        return result
-
-
-db = Conectar('localhost', 'root', 'wondershared98', 'bd_grupo4', 'port')
-
-
-class Producto():
-    ID_Producto =0,
-    Nombre_Producto = "",
-    Stock =0,
-    Precio = 0,
-    Unidad_de_medida = "",
-    ID_Receta = 0
-
-    def __init__(self,iD_Producto,nombre_Producto,stock,precio,unidad_de_medida,iD_Receta):
-        self.ID_Producto = iD_Producto
-        self.Nombre_Producto =nombre_Producto
-        self.Stock = stock
-        self.Precio = precio
-        self.Unidad_de_medida=unidad_de_medida
-        self.ID_Receta =iD_Receta
+    def consultarInsumos(self):
+        self.conexion.connect()
+        cursor=self.conexion.cursor()
+        cursor.execute("SELECT * FROM Insumos")
+        Insumos = cursor.fetchall()
+        y=0
+        x=0
+        for i in Insumos:
+            linea= ""
+            for x in range (8):
+                linea += str(Insumos[y][x]) + "  |  "
+            y+=1
+            print(linea)
+        return
     
-    def getiD_Producto(self):
-        return self.iD_Producto
-    def getnombre_Producto(self):
-        return self.nombre_Producto
-    def getstock(self):
-        return self.stock
-    def getprecio(self):
-        return self.precio
-    def getunidad_de_medida(self):
-        return self.unidad_de_medida
-    def getiD_Receta(self):
-        return self.iD_Receta
+    def eliminarInsumos(self):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        cursor.execute("DELETE FROM Insumos ")
+        self.conexion.commit()
+        print("Fue eliminado exitosamente")    
+        
+        
+    def actualizar_Insumos(self, ID_Insumos, Nombre, Cantidad):
+        self.conexion.connect()
+        query = "UPDATE categoria SET {} = %s WHERE ID_Insumos = %s".format(ID_Insumos)
+        valores = (ID_Insumos, Nombre, Cantidad)
+        cursor = self.conexion.cursor()
+        cursor.execute(query, valores)
+        self.conexion.commit()
+        if cursor.rowcount > 0:
+            print("Campo actualizado exitosamente.")
+        else:
+            print("No se encontró el registro o no se realizaron cambios.")
+            
+    def ProduccionDiaria(self):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        cursor.execute("SELECT * FROM Produccion Diaria")
+        ProduccionDiaria = cursor.fetchall()
+        y=0
+        x=0
+        for i in ProduccionDiaria:
+            print(ProduccionDiaria[y][0], ProduccionDiaria[y][1])
+            y+=1
+        self.conexion.close()
+
+    def insertarProduccion(self, ID_Produccion, Fecha, CantidadProductos):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        sql = "INSERT INTO Produccion(ID_Produccion, Fecha, CantidadProductos) VALUES (%s,%s,%s)"
+        cursor.execute(sql,(ID_Produccion, Fecha, CantidadProductos))
+        self.conexion.commit()
+        cursor.close()
+        self.conexion.close()
+
+    def consultarProduccion(self):
+        self.conexion.connect()
+        cursor=self.conexion.cursor()
+        cursor.execute("SELECT * FROM Produccion")
+        Produccion = cursor.fetchall()
+        y=0
+        x=0
+        for i in Produccion:
+            linea= ""
+            for x in range (8):
+                linea += str(Produccion[y][x]) + "  |  "
+            y+=1
+            print(linea)
+        return
     
-    def setiD_Producto(self,iD_Producto):
-        self.iD_Producto = iD_Producto
-    def setnombre_Producto(self,nombre_Producto):
-        self.nombre_Producto = nombre_Producto
-    def setstock(self,stock):
-        self.stock = stock
-    def setprecio(self,precio):
-        self.precio = precio
-    def setgetunidad_de_medida(self,getunidad_de_medida):
-        self.getunidad_de_medida = getunidad_de_medida
-    def setiD_Receta(self,iD_Receta):
-        self.iD_Receta = iD_Receta
+    def eliminarProduccion(self):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        cursor.execute("DELETE FROM Produccion ")
+        self.conexion.commit()
+        print("Fue eliminado exitosamente")
+              
+        
+    def actualizar_Produccion(self, ID_Produccion, Fecha, Cantidad_Productos):
+        self.conexion.connect()
+        query = "UPDATE categoria SET {} = %s WHERE ID_Insumos = %s".format(ID_Produccion)
+        valores = (ID_Produccion, Fecha, Cantidad_Productos)
+        cursor = self.conexion.cursor()
+        cursor.execute(query, valores)
+        self.conexion.commit()
+        if cursor.rowcount > 0:
+            print("Actualizado exitosamente.")
+        else:
+            print("No se encontró el registro o no se realizaron cambios.")
+            
+    def ListarReceta(self):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        cursor.execute("SELECT * FROM Receta")
+        Receta = cursor.fetchall()
+        y=0
+        x=0
+        for i in Receta:
+            print(Receta[y][0], Receta[y][1])
+            y+=1
+        self.conexion.close()
+
+    def insertarReceta(self, ID_Receta, ID_Producto, ID_Insumo, Cantidad_Usada):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        sql = "INSERT INTO Receta(ID_Receta, ID_Producto, ID_Insumo, Cantidad_Usada) VALUES (%s,%s,%s,%s)"
+        cursor.execute(sql,(ID_Receta, ID_Producto, ID_Insumo, Cantidad_Usada))
+        self.conexion.commit()
+        cursor.close()
+        self.conexion.close()
+
+    def consultarReceta(self):
+        self.conexion.connect()
+        cursor=self.conexion.cursor()
+        cursor.execute("SELECT * FROM Receta")
+        Receta = cursor.fetchall()
+        y=0
+        x=0
+        for i in Receta:
+            linea= ""
+            for x in range (8):
+                linea += str(Receta[y][x]) + "  |  "
+            y+=1
+            print(linea)
+        return
+    
+    def eliminarReceta(self):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        cursor.execute("DELETE FROM Receta ")
+        self.conexion.commit()
+        print("Fue eliminado exitosamente")
+        
+
+    def actualizar_Receta(self, ID_Receta, ID_Producto, ID_Insumo, Cantidad_Usada):
+        self.conexion.connect()
+        query = "UPDATE categoria SET {} = %s WHERE ID_Insumos = %s".format(ID_Receta)
+        valores = (ID_Receta, ID_Producto, ID_Insumo, Cantidad_Usada)
+        cursor = self.conexion.cursor()
+        cursor.execute(query, valores)
+        self.conexion.commit()
+        if cursor.rowcount > 0:
+            print("Campo actualizado exitosamente.")
+        else:
+            print("No se encontró el registro o no se realizaron cambios.")
+            
+    def Empleados(self):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        cursor.execute("SELECT * FROM Empleados")
+        Empleados = cursor.fetchall()
+        y=0
+        x=0
+        for i in Empleados:
+            print(Empleados[y][0], Empleados[y][1])
+            y+=1
+        self.conexion.close()
+
+    def insertarEmpleado(self, ID_Empleados, Nombre, Apellido, Puesto):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        sql = "INSERT INTO Empleado(ID_Empleados, Nombre, Apellido, Puesto) VALUES (%s,%s,%s,%s)"
+        cursor.execute(sql,(ID_Empleados, Nombre, Apellido, Puesto))
+        self.conexion.commit()
+        cursor.close()
+        self.conexion.close()
+
+    def consultarEmpleado(self):
+        self.conexion.connect()
+        cursor=self.conexion.cursor()
+        cursor.execute("SELECT * FROM Empleado")
+        Empleado = cursor.fetchall()
+        y=0
+        x=0
+        for i in Empleado:
+            linea= ""
+            for x in range (8):
+                linea += str(Empleado[y][x]) + "  |  "
+            y+=1
+            print(linea)
+        return
+    
+    def eliminarEmpleado(self):
+        self.conexion.connect()
+        cursor = self.conexion.cursor()
+        cursor.execute("DELETE FROM Empleado ")
+        self.conexion.commit()
+        print("Fue eliminado exitosamente")
+
+    def actualizar_Empleado(self, ID_Empleados, Nombre, Apellido, Puesto):
+        self.conexion.connect()
+        query = "UPDATE categoria SET {} = %s WHERE ID_Insumos = %s".format(ID_Empleados)
+        valores = (ID_Empleados, Nombre, Apellido, Puesto)
+        cursor = self.conexion.cursor()
+        cursor.execute(query, valores)
+        self.conexion.commit()
+        if cursor.rowcount > 0:
+            print("Campo actualizado exitosamente.")
+        else:
+            print("No se encontró el registro o no se realizaron cambios.")
