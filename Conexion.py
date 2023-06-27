@@ -1,22 +1,44 @@
 import mysql.connector
-class Conectar():
 
-    def __init__(self) -> None:
-        try:
-            conexion = mysql.connector.connect(
-                host = 'localhost',
-                port = 3306,
-                user = 'root',
-                password = 'Quebracho00',
-                db='bd_novo_mundo'
-            )
-            if conexion.is_connected():
-                print("LA CONEXION FUE EXITOSA")
+class MySQLConnection:
+    def __init__(self, host, user, password, database, port):
+        self.host = host
+        self.user = user
+        self.password = password
+        self.database = database
+        self.port = port
+        self.connection = None
 
-        except:
-            print("NO SE PUDO CONECTAR A LA BASE DE DATOS")
+    def connect(self):
+        self.connection = mysql.connector.connect(
+            host=self.host,
+            user=self.user,
+            port=self.port,
+            password=self.password,
+            database=self.database
+        )
+        if self.connection.is_connected():
+            print("Conexión exitosa a MySQL")
+        else:
+            print("Error al conectar a MySQL")
 
-        finally:
-            if conexion.is_connected():
-                conexion.close()
-                print("LA CONEXION FUE CERRADA")
+    def close(self):
+        if self.connection.is_connected():
+            self.connection.close()
+            print("Conexión cerrada")
+
+    def cursor(self):
+        return self.connection.cursor()
+    
+    def commit(self):
+        self.connection.commit()
+
+connection = MySQLConnection(
+    host='localhost',
+    user='root', 
+    password='Wondershared98',
+    port='3306',
+    database='bd_grupo4'
+)
+
+connection.connect()
