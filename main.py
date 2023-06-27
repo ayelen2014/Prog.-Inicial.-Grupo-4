@@ -2,7 +2,6 @@ from Modelo import *
 from datetime import datetime
 
 
-
 bd= panaderia()
 
 def mostrarMenuPrincipal():

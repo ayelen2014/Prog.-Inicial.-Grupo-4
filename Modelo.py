@@ -1,7 +1,6 @@
 import mysql.connector
 from Conexion import *
 
-
 class panaderia():
     def __init__(self):
         
