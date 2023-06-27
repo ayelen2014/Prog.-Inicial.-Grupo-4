@@ -5,7 +5,7 @@ class Conectar:
     def __init__(self, host, user, password, database, port):
         self.host = 'localhost'
         self.user = 'root'
-        self.password = 'wondershared98'
+        self.password = '9111'
         self.database = 'bd_grupo4'
         self.connection = None
         self.port = 3306
@@ -56,7 +56,7 @@ class Conectar:
         result = cursor.fetchall()
         return result
 
-db = Conectar('localhost', 'root', 'wondershared98', 'bd_grupo4', 'port')
+db = Conectar('localhost', 'root', '9111', 'bd_grupo4', 3306)
 
 
 class Producto():
